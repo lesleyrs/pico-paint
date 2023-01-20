@@ -8,6 +8,7 @@ This is my first completed cartridge, made for people who don't like clicking or
 It allows you to paint, copy, and paste 8x8 pixel art into pico-8 games without requiring a mouse.
 
 ### Key shortcuts:
+- arrow keys to move
 - `x` to paint
 - `c` + `up` or `down` to change active palette
 - `c` + `left` to turn background col into active palette
@@ -15,3 +16,5 @@ It allows you to paint, copy, and paste 8x8 pixel art into pico-8 games without 
 - `enter` for the other settings
 
 Copying and pasting is not as efficient as i'd like because of the built-in limitations of writing to and reading from clipboard. Make sure to `ctrl-c` after pressing copy in menu, and before pressing `ctrl-v` you have to press paste in menu.
+
+Thanks to https://www.lexaloffle.com/bbs/?uid=44112 for the string insert function https://www.lexaloffle.com/bbs/?pid=116400#p
