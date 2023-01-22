@@ -4,20 +4,20 @@ __lua__
 --pico paint
 --made by lesley
 ▒ = 16
-x,y,col,dcol = 0,0,7,7
+x,y,col,dcol = 0,0,7,8
 delay = 3
 frames = 0
 drawframes = 0
 clear = "[gfx]08080000000000000000000000000000000000000000000000000000000000000000[/gfx]"
 pix = "[gfx]08080000000000000000000000000000000000000000000000000000000000000000[/gfx]"
 hidedebug = false
+poke(0x5f5c, 255)
 
 function _init()
 	menuitem(1, "-copy image", function() printh(pix, "@clip") end)
 	menuitem(2, "-paste clipboard", clipcheck)
 	menuitem(3, "-new canvas", function() pix = clear end)
-	menuitem(4, "-move delay", toggledelay)
-	menuitem(5, "-toggle debug", toggledebug)
+	menuitem(4, "-toggle debug", toggledebug)
 	last_copy = stat(4)
 end
    
@@ -27,6 +27,9 @@ function _update()
 	frames += 1
 	drawframes += 1
 	fontcol()
+	if not hidedebug then
+		debugcol()
+	end
 	px, py = x/▒+1,y/▒+1
 	pos = py * 8 + px - 8
 	hex = tostr(col,true)
@@ -56,11 +59,11 @@ function _update()
 		rectfill(x+2,y+2,x+13,y+13,col)
 	end
 	if not hidedebug then
---		?"pix:"..pix,dcol
+		?"x y pos "..px.." "..py.." "..pos,2,2,dcol
+		?"d p bgp "..delay.." "..hex[6].." "..pix[pos+9],dcol
+--		?"pix:"..pix,2,18,dcol
 --		?"cpy:"..stat(4),dcol
 --		?"lst:"..last_copy,dcol
-		?"px,py,pos:"..px..","..py..","..pos,dcol
-		?"delay,fg pal,bg pal:"..delay..","..hex[6]..","..pix[pos+9],dcol
 	end
 	if btn(❎) then
 		if drawframes >= delay then
@@ -69,6 +72,9 @@ function _update()
 		end
 	end
 	if btn(🅾️) then
+		if btnp(➡️) then
+				toggledelay()
+		end
 		if frames >= delay then
 			frames = 0
 			if btn(⬆️) then
@@ -85,12 +91,6 @@ function _update()
 				end
 			elseif btn(⬅️) then
 				col = tonum(pix[pos+9],0x1)
-			elseif btn(➡️) then
-				if not hidedebug then
-					debugcol()
-				else
-					toggledelay()
-				end
 			end
 		end
 	end
@@ -127,15 +127,20 @@ function _update()
 end
 
 function debugcol()
-	if dcol < 15 then
-		dcol += 1
-	else
-		dcol = 0
+ green = {3,4,5,8}
+--	red = {9,b,c,d,e}
+	for c=1,#green do
+		if tonum(pix[12],0x1) == green[c] then
+			dcol = 11
+			break
+		else
+			dcol = 8
+		end
 	end
 end
 
 function fontcol()
-	if col == 0 then
+	if col < 6 then
 		fcol = 7
 	else
 		fcol = 0
