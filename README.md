@@ -10,8 +10,8 @@ It allows you to paint, copy, and paste 8x8 pixel art into pico-8 games without 
 ### Key shortcuts:
 - arrow keys to move
 - `x` to paint
-- `c` + `up` or `down` to change active palette
-- `c` + `left` to turn background col into active palette
+- `c` + `up` or `down` to change active colour
+- `c` + `left` to turn background colour into active colour
 - `c` + `right` to change move delay
 - `enter` for the other settings
 
