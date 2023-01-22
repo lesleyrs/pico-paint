@@ -11,6 +11,7 @@ drawframes = 0
 clear = "[gfx]08080000000000000000000000000000000000000000000000000000000000000000[/gfx]"
 pix = "[gfx]08080000000000000000000000000000000000000000000000000000000000000000[/gfx]"
 hidedebug = false
+moving = false
 poke(0x5f5c, 255)
 
 function _init()
@@ -31,6 +32,14 @@ function _update()
 	hex = tostr(col,true)
 	drawall()
 	takeinput()
+	for i=0,3 do
+		if btn(i) and not btn(🅾️) then
+			moving = true
+			break
+		else
+			moving = false
+		end
+	end
 end
 
 function takeinput()
@@ -64,7 +73,7 @@ function takeinput()
 		end
 	end
 	if not btn(🅾️) then
-		if frames >= delay then
+		if frames >= delay or moving == false then
 			frames = 0
 			if btn(⬆️) then
 				if y > 0 then
@@ -120,6 +129,7 @@ function drawall()
 --		?"pix:"..pix,2,18,dcol
 --		?"cpy:"..stat(4),dcol
 --		?"lst:"..last_copy,dcol
+--		?"moving:"..tostr(moving),dcol
 	end
 end
 
