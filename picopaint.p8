@@ -33,16 +33,9 @@ function _update()
 	px, py = x/▒+1,y/▒+1
 	pos = py * 8 + px - 8
 	hex = tostr(col,true)
-	for x=0,7 do
---	idk how to 1 line this
-		rectfill(x*▒+1,0*▒+1,x*▒+14,0*▒+14,tonum(pix[10+x],0x1))
-		rectfill(x*▒+1,1*▒+1,x*▒+14,1*▒+14,tonum(pix[18+x],0x1))
-		rectfill(x*▒+1,2*▒+1,x*▒+14,2*▒+14,tonum(pix[26+x],0x1))
-		rectfill(x*▒+1,3*▒+1,x*▒+14,3*▒+14,tonum(pix[34+x],0x1))
-		rectfill(x*▒+1,4*▒+1,x*▒+14,4*▒+14,tonum(pix[42+x],0x1))
-		rectfill(x*▒+1,5*▒+1,x*▒+14,5*▒+14,tonum(pix[50+x],0x1))
-		rectfill(x*▒+1,6*▒+1,x*▒+14,6*▒+14,tonum(pix[58+x],0x1))
-		rectfill(x*▒+1,7*▒+1,x*▒+14,7*▒+14,tonum(pix[66+x],0x1))
+	for i=0,63 do
+--	https://github.com/24appnet/pico8-mosaicicons/blob/master/mosaic.p8
+		rectfill(i%8*▒+1,flr(i/8)*▒+1,i%8*▒+14,flr(i/8)*▒+14,tonum(pix[10+i],0x1))
 		end
 	if hidedebug then
 		rectfill(x+1,y+1,x+14,y+14,col)
@@ -166,6 +159,7 @@ function toggledebug()
  hidedebug = not hidedebug
 end
 
+--https://www.lexaloffle.com/bbs/?pid=116400#p
 function setchar(s,i,c)
  return sub(s,1,i-1)..c..sub(s,i+1)
 end
